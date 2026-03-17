@@ -9,13 +9,15 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: ['es2020'],
   },
+  nitro: {
+    alias: {
+      '@server': 'src/server',
+    },
+  },
   resolve: {
     mainFields: ['module'],
   },
-  plugins: [
-    analog(),
-    tailwindcss()
-  ],
+  plugins: [analog(), tailwindcss()],
   test: {
     globals: true,
     environment: 'jsdom',
