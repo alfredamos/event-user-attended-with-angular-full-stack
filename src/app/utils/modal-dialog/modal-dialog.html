@@ -1,0 +1,26 @@
+@if (isOpen()){
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    <!-- Modal backdrop, closes the modal when clicked -->
+    <div class="fixed inset-0" (click)="closeModal()"></div>
+
+    <!-- Modal container -->
+    <div class="relative p-4 w-full max-w-lg bg-white rounded-lg shadow-lg dark:bg-gray-700 max-h-[90vh] overflow-y-auto">
+      <!-- Modal header -->
+      <div class="flex justify-between items-center pb-3 rounded-t border-b dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Dialog Title
+        </h3>
+        <button (click)="closeModal()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+          <!-- Close icon (e.g., an X icon) -->
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body (using ng-content for dynamic content) -->
+      <div class="p-4 md:p-5 space-y-4">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+
+}
