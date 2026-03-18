@@ -6,7 +6,7 @@ import { AnalogWelcome } from './analog-welcome';
   selector: 'app-home',
   imports: [AnalogWelcome],
   template: `
-     <app-analog-welcome/>
+     <div>Home Page</div>
   `,
 })
 export default class Home {}
