@@ -1,18 +1,17 @@
-import {Request} from "express";
-import {NextRequest} from "next/server";
-
 const routes = [
-    "/",
-    "/api/login",
-    "/api/logout",
-    "/api/signup",
-    "/api/refresh",
-    "/api/auth/login",
-    "/api/auth/logout",
-    "/api/auth/signup",
-    "/api/auth/refresh",
+  "/",
+  "/login",
+  "/signup",
+  "/api/auth/login",
+  "/api/auth/logout",
+  "/api/auth/signup",
+  "/api/auth/refresh",
+  "/api/posts",
+  "/api/authors",
+  "/authors",
+  "/posts"
 ]
 
-export function isPublicRoute(request: NextRequest){
-    return routes.includes(request?.nextUrl?.pathname);
+export function isPublicRoute(route: string): boolean {
+  return routes.includes(route);
 }

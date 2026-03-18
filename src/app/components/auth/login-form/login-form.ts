@@ -1,4 +1,4 @@
-import {Component, output, signal, OnInit, OnChanges, SimpleChange} from '@angular/core';
+import {Component, output, signal} from '@angular/core';
 import {email, FormField, form, required} from '@angular/forms/signals';
 import {LoginUserModel} from "../../../models/auth/LoginUserModel";
 
@@ -8,6 +8,7 @@ import {LoginUserModel} from "../../../models/auth/LoginUserModel";
     FormField
   ],
   templateUrl: './login-form.html',
+  standalone: true
 })
 export class LoginForm{
   loginUserModel = signal<LoginUserModel>({

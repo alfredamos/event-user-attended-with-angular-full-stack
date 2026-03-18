@@ -3,8 +3,6 @@ import {email, FormField, form, required} from '@angular/forms/signals';
 import {User} from "../../../models/User";
 import {Gender} from "../../../models/Gender";
 import {EditUserProfileModel} from "../../../models/auth/EditUserProfileModel";
-import {formattedDate} from "../../utils/formattedDate";
-import {stringToDate} from "../../utils/stringToDate";
 
 @Component({
   selector: 'app-edit-profile-form',
@@ -12,6 +10,7 @@ import {stringToDate} from "../../utils/stringToDate";
     FormField
   ],
   templateUrl: './edit-profile-form.html',
+  standalone: true
 })
 export class EditProfileForm implements OnInit, OnChanges{
   user = input.required<User>()
@@ -19,8 +18,6 @@ export class EditProfileForm implements OnInit, OnChanges{
   onBackToList = output<void>();
 
   editUserProfileModel = signal<EditUserProfileModel>({
-    address: "",
-    dateOfBirth: "",
     email: "",
     name: "",
     image: "",
@@ -64,21 +61,18 @@ export class EditProfileForm implements OnInit, OnChanges{
 
   fromUserToEditProfileModel(user : User): EditUserProfileModel{
     return {
-      dateOfBirth: formattedDate(stringToDate(user?.author?.dateOfBirth)),
       email: user?.email,
-      gender: user?.author?.gender,
+      gender: user?.gender,
       image: user?.image,
       password: "",
-      phone: user?.author?.phone,
+      phone: user?.phone,
       role: user?.role,
       name: user?.name,
-      address: user?.author?.address
     }
   }
 
   inputFromEditProfileForm(request: EditUserProfileModel){
     return {
-      dateOfBirth: request.dateOfBirth,
       email: request.email,
       gender: request.gender,
       image: request.image,
@@ -86,7 +80,6 @@ export class EditProfileForm implements OnInit, OnChanges{
       phone: request.phone,
       role: request.role,
       name: request.name,
-      address: request.address
     }
   }
 

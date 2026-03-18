@@ -1,6 +1,8 @@
-import {computed, Injectable, signal} from "@angular/core";
+import {computed, inject, Injectable, signal} from "@angular/core";
 import {Session} from "../../server/models/session.model";
 import {BrowserStorageService} from "./browser-storage-service";
+import {User} from "../models/User";
+import {LocalStorageKey} from "../models/LocalStorageKey";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -16,7 +18,7 @@ export class AuthService {
 
   storageService = inject(BrowserStorageService);
 
-  setSession(userSession: UserSession){
+  setSession(userSession: Session){
     this.authRes.set(userSession);
 
   }
@@ -33,7 +35,7 @@ export class AuthService {
   }
 
   getLocalStorage(){
-    return JSON.parse(this.storageService.get(LocalStorageKey.authKey) as string ) as UserSession;
+    return JSON.parse(this.storageService.get(LocalStorageKey.authKey) as string ) as Session;
   }
 
   removeStorage(){

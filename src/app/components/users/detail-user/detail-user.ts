@@ -2,8 +2,8 @@ import {Component, inject, OnInit, signal} from '@angular/core';
 import {User} from "../../../models/User";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {UserService} from "../../../services/user-service";
-import {ModalDialog} from "../../utils/modal-dialog/modal-dialog";
-import { UserHttpClientDb } from '../../../services/user-db-httpClient';
+import {ModalDialog} from "../../../utils/modal-dialog/modal-dialog";
+import {UserDb} from "../../../services/user-db";
 
 @Component({
   selector: 'app-user-detail',
@@ -22,7 +22,7 @@ export class DetailUser implements OnInit{
 
   route = inject(ActivatedRoute);
   router = inject(Router)
-  userDb =inject(UserHttpClientDb)
+  userDb =inject(UserDb)
   userService = inject(UserService);
 
   async ngOnInit() {

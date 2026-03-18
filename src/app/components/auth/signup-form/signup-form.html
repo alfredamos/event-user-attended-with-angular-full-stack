@@ -36,16 +36,7 @@
         <label for="confirmPassword" class="text-base">Confirm Password</label>
         <input class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="password" id="confirmPassword" [formField]="signupUserForm.confirmPassword"/>
       </div>
-      <div class="flex-col mb-3">
-        <label for="dateOfBirth" class="text-base">Birthdate</label>
-        <input class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="date" id="dateOfBirth" [formField]="signupUserForm.dateOfBirth"/>
-      </div>
     </div>
-  </div>
-  <div class="mb-3">
-    <label  for="address" class="text-base">Address</label>
-    <textarea type="text" id="address" class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" [formField]="signupUserForm.address">
-    </textarea>
   </div>
   <div class="flex flex-col md:flex-row items-center md:justify-between mt-6 md:gap-2">
     <button type="button" class="py-2 border-2 border-yellow-900 px-4 hover:bg-yellow-900 hover:text-white text-yellow-900 font-bold rounded-lg w-full md:w-1/2 mb-2" (click)="backToList()">Back</button>

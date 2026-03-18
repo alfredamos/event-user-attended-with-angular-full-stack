@@ -1,5 +1,5 @@
-import {Gender} from './Gender';
-import {Role} from './Role';
+import {Role} from "./Role";
+import {Gender} from "./Gender";
 
 export class User{
   id: string = "";
@@ -7,6 +7,6 @@ export class User{
   email: string = "";
   phone: string = "";
   gender:   Gender = Gender.Male;
-  role: Role = Role.User;
+  role: Role = Role.NonUser;
   image: string = "";
 }

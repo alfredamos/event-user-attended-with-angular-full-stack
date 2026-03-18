@@ -21,10 +21,6 @@
         <input class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="email" id="email" [formField]="editUserProfileForm.email"/>
       </div>
       <div class="flex-col mb-3">
-        <label for="dateOfBirth" class="text-base">Birthdate</label>
-        <input  class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="date" id="dateOfBirth" [formField]="editUserProfileForm.dateOfBirth"/>
-      </div>
-      <div class="flex-col mb-3">
         <label for="image" class="text-base">Image</label>
         <input  class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="text" id="Image" [formField]="editUserProfileForm.image"/>
       </div>
@@ -38,11 +34,6 @@
       <option value="Male">Male</option>
       <option value="Female">Female</option>
     </select>
-  </div>
-  <div class="mb-3">
-    <label  for="address" class="text-base">Address</label>
-    <textarea id="address" class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" [formField]="editUserProfileForm.address">
-    </textarea>
   </div>
   <div class="flex flex-col md:flex-row items-center md:justify-between mt-6 md:gap-2">
     <button type="button" class="py-2 border-2 border-yellow-900 px-4 hover:bg-yellow-900 hover:text-white text-yellow-900 font-bold rounded-lg w-full md:w-1/2 mb-2" (click)="backToList()">Back</button>

@@ -2,6 +2,7 @@ import { Component, input, output } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {NgOptimizedImage} from "@angular/common";
 import {User} from "../../../models/User";
+import {ChangeUserRole} from "../../../models/auth/ChangeUserRole";
 
 @Component({
   selector: 'app-user-table',
@@ -11,11 +12,10 @@ import {User} from "../../../models/User";
 })
 export class UserTable {
   users = input.required<User[]>()
-  protected readonly encodeURIComponent = encodeURIComponent;
 
-  onChangeRole = output<User>()
+  onChangeRole = output<ChangeUserRole>()
 
-  async changeRole(user: User) {
+  async changeRole(user: ChangeUserRole) {
     this.onChangeRole.emit(user);
   }
 }

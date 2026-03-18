@@ -1,4 +1,4 @@
-import {Component, input, output, signal, SimpleChanges} from '@angular/core';
+import {Component, input, OnChanges, OnInit, output, signal, SimpleChanges} from '@angular/core';
 import {form, required, email, FormField} from '@angular/forms/signals';
 import {ChangeUserPasswordModel} from "../../../models/auth/ChangeUserPasswordModel";
 
@@ -9,7 +9,7 @@ import {ChangeUserPasswordModel} from "../../../models/auth/ChangeUserPasswordMo
   ],
   templateUrl: './change-password-form.html',
 })
-export class ChangePasswordForm {
+export class ChangePasswordForm implements OnInit, OnChanges{
   email = input.required<string>()
   onChangeUserPassword = output<ChangeUserPasswordModel>()
   onBackToList = output<void>()

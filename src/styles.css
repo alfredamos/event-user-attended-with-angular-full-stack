@@ -1,2 +1,14 @@
 @import 'tailwindcss';
 
+/* Light theme (default) */
+:root {
+  --color-primary: #3b82f6; /* blue-500 */
+  --color-secondary: #10b981; /* emerald-500 */
+}
+
+/* Dark theme */
+.dark {
+  --color-primary: #1e40af; /* blue-800 */
+  --color-secondary: #065f46; /* emerald-800 */
+}
+

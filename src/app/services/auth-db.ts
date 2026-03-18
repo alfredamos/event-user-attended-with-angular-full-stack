@@ -7,7 +7,6 @@ import { ChangeUserRole } from "src/server/validations/auth.validation";
 import { ChangeUserPasswordModel } from "../models/auth/ChangeUserPasswordModel";
 import { EditUserProfileModel } from "../models/auth/EditUserProfileModel";
 import { SignupUserModel } from "../models/auth/SignupUserModel";
-import { UserSession } from "../models/auth/UserSession";
 import { User } from "../models/User";
 import { AuthService } from "./auth-service";
 
@@ -83,7 +82,7 @@ export class AuthDb {
     this.isLoading.set(true);
     this.error.set(null);
     try {
-      const response = await this.apiHttpClientService.post<UserSession>(
+      const response = await this.apiHttpClientService.post<Session>(
         '/auth/login',
         loginUser,
       );
@@ -95,7 +94,7 @@ export class AuthDb {
     }
   }
 
-  updateSession(session: UserSession) {
+  updateSession(session: Session) {
     this.data.set(session);
     this.authService.setSession(session);
     this.authService.setLocalStorage(session);
@@ -104,8 +103,9 @@ export class AuthDb {
   async logoutUser() {
     this.isLoading.set(true);
     this.error.set(null);
+    console.log("In logout now******");
     try {
-      const response = await this.apiHttpClientService.post<UserSession>(
+      const response = await this.apiHttpClientService.post<Session>(
         '/auth/logout',
         null,
       );
@@ -153,7 +153,7 @@ export class AuthDb {
     this.isLoading.set(true);
     this.error.set(null);
     try {
-      const response = await this.apiHttpClientService.post<UserSession>(
+      const response = await this.apiHttpClientService.post<Session>(
         '/auth/refresh',
         null,
       );

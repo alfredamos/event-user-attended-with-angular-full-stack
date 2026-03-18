@@ -1,10 +1,11 @@
 import {Component} from "@angular/core";
+import {DetailUser} from "../../../components/users/detail-user/detail-user";
 
 @Component({
   selector: 'app-detail-user-page',
-  imports: [],
+  imports: [DetailUser],
   template: `
-    <div>Detail Page</div>
+    <app-user-detail></app-user-detail>
   `,
 })
 export default class DetailUserPage {}

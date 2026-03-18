@@ -2,8 +2,6 @@ import {Gender} from '../Gender';
 import {Role} from '../Role';
 
 export class EditUserProfileModel{
-  address: string = "";
-  dateOfBirth: string | Date = new Date();
   name: string = "";
   email: string = "";
   phone: string = "";
