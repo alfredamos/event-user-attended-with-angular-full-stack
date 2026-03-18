@@ -1,6 +1,6 @@
-import { AttendeeUncheckedCreateInput, AttendeeUncheckedUpdateInput } from "src/generated/prisma/models";
-import {AttendeeResponse, toAttendeeResponse} from "src/server/dto/attendeeRequest.dto";
-import { ResponseMessage } from "src/server/utils/responseMessage.util";
+import { AttendeeUncheckedCreateInput, AttendeeUncheckedUpdateInput } from "../../../generated/prisma/models";
+import {AttendeeResponse, toAttendeeResponse} from "../../dto/attendeeRequest.dto";
+import { ResponseMessage } from "../../utils/responseMessage.util";
 import {IAttendeeService} from "./IAttendeeService";
 import {prisma} from "../../db/prisma";
 import catchError from "http-errors";

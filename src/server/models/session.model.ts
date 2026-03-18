@@ -4,7 +4,7 @@ export class Session {
     id: string = "";
     name: string = "";
     email: string = "";
-    role: Role = Role.User;
+    role: Role = Role.NoUser;
     accessToken: string = "";
     isLoggedIn: boolean = false;
     isAdmin: boolean = false;

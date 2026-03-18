@@ -1,6 +1,5 @@
 import {createError, defineEventHandler, getRouterParam} from "h3";
 import {eventService} from "../../../services/events/EventService";
-import {authService} from "../../../services/auth/AuthService";
 import {HttpError} from "http-errors";
 
 export default defineEventHandler(async (event) => {
