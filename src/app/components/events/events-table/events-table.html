@@ -1,1 +1,73 @@
-<p>events-table works!</p>
+@if (events().length === 0) {
+  <div class="flex justify-between items-center mt-5">
+    <span class="font-bold">Add New Event</span>
+    <button class="flex-end px-4 py-1 bg-white text-indigo-900 border border-indigo-900 hover:bg-indigo-900 hover:text-white rounded-lg">
+      <a routerLink="/events/add" class="font-bold">Add</a>
+    </button>
+  </div>
+  <div class="h-dvh flex justify-center items-center">
+    <h1 class="font-bold p-10 bg-red-200 ring-1 ring-red-200 rounded-lg shadow-lg text-black">There are no events to display at this time!</h1>
+  </div>
+}@else{
+
+  <div class="overflow-x-auto overflow-y-auto mt-5 max-w-sm md:max-w-2xl mx-auto">
+    <hr class="h-px my-4 bg-gray-200 border-0"/>
+    <h4 class="text-center text-xl font-bold">List of Events</h4>
+    <hr class="h-px my-4 bg-gray-200 border-0"/>
+    <div class="flex justify-between items-center">
+      <span class="font-bold">Add New Event</span>
+      <button class="flex-end px-4 py-1 bg-white text-indigo-900 border border-indigo-900 hover:bg-indigo-900 hover:text-white rounded-lg">
+        <a routerLink="/events/add" class="font-bold">Add</a>
+      </button>
+    </div>
+    <hr class="h-px my-4 bg-gray-200 border-0"/>
+    <table class="mt-5">
+      <thead>
+      <tr>
+        <th class="px-2 text-left">Image</th>
+        <th class="px-2 text-left">name</th>
+        <th class="px-2 text-left">Description</th>
+        <th class="px-2 text-left">Location</th>
+        <th class="px-2 text-left">Date</th>
+        <th class="px-2 text-center">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (event of events(); track event.id){
+          <tr>
+            <td class="m-1">
+              <div class="relative w-full h-20">
+                <img
+                  [ngSrc]="event.image"
+                  class="object-cover p-1"
+                  [alt]="event.name"
+                  fill
+                  priority
+                />
+              </div>
+            </td>
+            <td class="px-2 align-top">{{event.name}}</td>
+            <td class="px-2 align-top">{{event.description}}</td>
+            <td class="px-2 align-top">{{event.location}}</td>
+            <td class="px-2 align-top">{{event.date | date}}</td>
+            <td class="flex items-center justify-center gap-2 px-2 align-middle">
+              <a [routerLink]="`/events/${event.id}/detail`" class="px-2 py-1 bg-white text-indigo-900 border border-indigo-900 hover:bg-indigo-900 hover:text-white font-bold rounded-md">
+                Detail
+              </a>
+              <a [routerLink]="`/events/${event.id}/detail`" class="px-2 py-1 bg-white text-rose-900 border border-rose-900 hover:bg-rose-900 hover:text-white font-bold rounded-md">
+                Delete
+              </a>
+              <a [routerLink]="`/attendees/by-event-id/${event.id}`" class="px-2 py-1 bg-white text-gray-900 border border-gray-900 hover:bg-gray-900 hover:text-white font-bold rounded-md">
+                Attendees
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <hr class="h-px my-8 bg-gray-200 border-0"/>
+  </div>
+}
+
+
+

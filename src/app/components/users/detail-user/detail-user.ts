@@ -1,6 +1,6 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, input, OnInit, signal} from '@angular/core';
 import {User} from "../../../models/User";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {UserService} from "../../../services/user-service";
 import {ModalDialog} from "../../../utils/modal-dialog/modal-dialog";
 import {UserDb} from "../../../services/user-db";
@@ -16,24 +16,21 @@ import {UserDb} from "../../../services/user-db";
   standalone: true
 })
 export class DetailUser implements OnInit{
-  userId = "";
+  userId = input.required<string>();
   user = signal<User>(new User())
   isModalOpen = false;
 
-  route = inject(ActivatedRoute);
   router = inject(Router)
   userDb =inject(UserDb)
   userService = inject(UserService);
 
-  async ngOnInit() {
-    this.userId = this.route.snapshot.params['id'];
-    const user = await this.loadUser();
+  ngOnInit() {
+    const user = this.loadUser();
     this.user.set(user)
   }
 
-  async loadUser(){
-    let oneUser = await this.userDb.getUserById(this.userId);
-    return this.userService.findUserById(this.userId) ?? oneUser
+  loadUser(){
+    return this.userService.findUserById(this.userId())
   }
 
   openModal() {
@@ -45,7 +42,7 @@ export class DetailUser implements OnInit{
   }
 
   async deleteUser(){
-    await this.userDb.deleteUserById(this.userId)
+    await this.userDb.deleteUserById(this.userId())
     await this.router.navigate(['/users']);
   }
 }
