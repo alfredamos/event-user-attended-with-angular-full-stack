@@ -9,9 +9,10 @@ import {AuthService} from "../../../../services/auth-service";
 import {adminGuard} from "../../../../guards/adminGuard.guard";
 import {authGuard} from "../../../../guards/authGuard.guard";
 import {RouteMeta} from "@analogjs/router";
+import {isOwnerCheckByUserIdOrAdminGuard} from "../../../../guards/isOwnerCheckByUserIdOrAdminGuard.guard";
 
 export const routeMeta: RouteMeta = {
-  canActivate: [authGuard, adminGuard],
+  canActivate: [authGuard, isOwnerCheckByUserIdOrAdminGuard],
 };
 
 @Component({

@@ -42,7 +42,7 @@ export default class Home implements OnInit{
     }
 
     //----> Create a new attendee.
-    await this.attendeeDb.createEvent(newAttendee);
+    await this.attendeeDb.createAttendee(newAttendee);
 
     await this.router.navigate([this.authService.isAdmin() ? "/attendees" : `/attendees/by-user-id/${userId}`]);
 

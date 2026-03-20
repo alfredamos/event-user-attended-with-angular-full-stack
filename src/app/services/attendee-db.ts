@@ -123,7 +123,7 @@ export class AttendeeDb {
     this.attendeeService.setLocalStorage(newAttendees);
   }
 
-  async createEvent(attendee: AttendeeCreate) {
+  async createAttendee(attendee: AttendeeCreate) {
     this.isLoading.set(true);
     this.error.set(null);
     try {

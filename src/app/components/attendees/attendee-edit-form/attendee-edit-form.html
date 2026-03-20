@@ -1,0 +1,27 @@
+<form class="flex flex-col max-w-sm shadow-2xl px-10 py-8 mx-auto rounded-lg mt-20 ring ring-gray-300">
+  <h4 class="text-center text-xl font-bold mb-4">Attendee Edit Form</h4>
+  <div class="mb-3 flex-col items-center">
+    <label for="eventId" class="text-base">EventID</label>
+    <input class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="text" id="eventId" [formField]="attendeeEditForm.eventId"/>
+  </div>
+  <div class="mb-3 flex-col items-center">
+    <label for="userId" class="text-base">UserID</label>
+    <input class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="text" id="userId" [formField]="attendeeEditForm.userId"/>
+  </div>
+  <div class="mb-3 flex-col items-center">
+    <label for="status" class="text-base">Status</label>
+    <select class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" id="eventId" [formField]="attendeeEditForm.status">
+       <option [id]="'Attending'" [value]="'Attending'">Attending</option>
+       <option [id]="'Cancelled'" [value]="'Cancelled'">Cancelled</option>
+       <option [id]="'Registered'" [value]="'Registered'">Registered</option>
+    </select>
+  </div>
+  <div class="flex flex-col md:flex-row items-center md:justify-between mt-6 md:gap-2">
+    <button type="button" class="py-2 border-2 border-yellow-900 px-4 hover:bg-yellow-900 hover:text-white text-yellow-900 font-bold rounded-lg w-full md:w-1/2 mb-2" (click)="backToList()">Back</button>
+    <button type="button" class="py-2 px-4 border-2 border-indigo-900 hover:bg-indigo-900 hover:text-white text-indigo-900 font-bold rounded-lg w-full md:w-1/2 mb-2" (click)="onSubmit($event)">Save</button>
+  </div>
+</form>
+
+
+
+

@@ -4,9 +4,10 @@ import {AttendeeDb} from "../../../services/attendee-db";
 import {AttendeeService} from "../../../services/attendee-service";
 import {RouteMeta} from "@analogjs/router";
 import {authGuard} from "../../../guards/authGuard.guard";
+import {adminGuard} from "../../../guards/adminGuard.guard";
 
 export const routeMeta: RouteMeta = {
-  canActivate: [authGuard],
+  canActivate: [authGuard, adminGuard],
 };
 
 @Component({

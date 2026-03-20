@@ -3,6 +3,13 @@ import {EventCreateForm} from "../../components/events/event-create-form/event-c
 import {EventCreate} from "../../models/EventCreate.model";
 import {EventDb} from "../../services/event-db";
 import {Router} from "@angular/router";
+import {RouteMeta} from "@analogjs/router";
+import {adminGuard} from "../../guards/adminGuard.guard";
+import {authGuard} from "../../guards/authGuard.guard";
+
+export const routeMeta: RouteMeta = {
+  canActivate: [authGuard, adminGuard],
+};
 
 @Component({
   selector: 'app-add-event-page',

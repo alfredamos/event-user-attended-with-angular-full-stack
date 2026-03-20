@@ -1,0 +1,81 @@
+<div class="flex flex-col max-w-sm mx-auto my-auto mt-10 ring-2 ring-gray-300 dark:text-gray-400 dark:ring-gray-600 p-2 rounded-t-md mb-10 shadow-xl">
+  <div class="flex items-center justify-between">
+    <div class="flex-col items-center">
+      <p class="text-sm text-start font-bold">User</p>
+      <div class="flex flex-col items-center md:flex-row md:justify-between m-1 gap-2">
+        <img [src]="attendeeResponse().userImage" [alt]="attendeeResponse().userName" class="rounded-full h-10 w-10"/>
+        <p class="text-sm">{{attendeeResponse().userName}}</p>
+      </div>
+    </div>
+    <div class="flex-col items-center">
+      <p class="text-sm text-start font-bold">Event</p>
+      <div class="flex flex-col items-center md:flex-row md:justify-between m-1 gap-2">
+        <img [src]="attendeeResponse().eventImage" [alt]="attendeeResponse().eventName" class="rounded-full h-10 w-10"/>
+        <p class="text-sm">{{attendeeResponse().eventName}}</p>
+      </div>
+    </div>
+  </div>
+  <hr class="text-gray-300 mt-4 mb-4"/>
+  <div class="w-full">
+    <div class="">
+      <p class="text-sm mt-2 mb-2 flex items-center justify-between">
+        <span>Title</span>
+        <span class="text-start">{{attendeeResponse().eventName}}</span>
+      </p>
+      <p class="text-sm mt-2 mb-2 flex items-center justify-between">
+        <span>Location</span>
+        <span class="text-start">{{attendeeResponse().location}}</span>
+      </p>
+      <p class="text-sm mt-2 mb-2 flex items-center justify-between">
+        <span>Date</span>
+        <span class="text-start">{{attendeeResponse().date | date}}</span>
+      </p>
+
+      <p class="flex flex-col mt-2 mb-2">
+        <span class="text-sm">Description</span>
+        <span class="break-words">{{attendeeResponse().description}}</span>
+      </p>
+      <p class="text-sm mt-2 mb-2 flex items-center justify-between">
+        <span>Status</span>
+        <span class="text-start">{{attendeeResponse().status}}</span>
+      </p>
+      <p class="text-sm mt-2 mb-2 flex items-center justify-between">
+        <span>Email</span>
+        <span class="text-start">{{attendeeResponse().userEmail}}</span>
+      </p>
+      <p class="text-sm mt-2 mb-2 flex items-center justify-between">
+        <span>Phone</span>
+        <span class="text-start">{{attendeeResponse().userPhone}}</span>
+      </p>
+      <p class="text-sm mt-2 mb-2 flex items-center justify-between">
+        <span>Gender</span>
+        <span class="text-start">{{attendeeResponse().gender}}</span>
+      </p>
+    </div>
+    <hr class="mt-4 mb-4 text-gray-300"/>
+    <div class="flex flex-col items-center gap-2 md:flex-row md:justify-between h-full mb-5 mt-5">
+      <button class="w-full md:flex-1 py-2 px-4 border-2 border-indigo-900 hover:bg-indigo-900 hover:text-white text-indigo-900 font-bold rounded-lg">
+        <a [routerLink]="`${isAdmin() ? '/attendees' : `/attendees/by-user-id/${attendeeResponse().userId}`}`">Back</a>
+      </button>
+      <button class="w-full md:flex-1 py-2 px-4 border-2 border-rose-900 hover:bg-rose-900 hover:text-white text-rose-900 font-bold rounded-lg" (click)="openModal()">
+        Delete
+      </button>
+      <button class="w-full md:flex-1 py-2 border-2 border-yellow-900 px-4 hover:bg-yellow-900 hover:text-white text-yellow-900 font-bold rounded-lg">
+        <a [routerLink]="`/attendees/${attendeeResponse().eventId}/${attendeeResponse().userId}/edit`">Edit</a>
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-modal-dialog [isOpen]="isModalOpen()" (close)="modalClose()">
+  <!-- Content passed into the modal's ng-content -->
+  <p class="text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
+    Do you really want to delete attendee on event {{attendeeResponse().eventName}} by name {{attendeeResponse().userName}}?
+  </p>
+  <button (click)="deleteAttendee({eventId: attendeeResponse().eventId, userId: attendeeResponse().userId})" class="mt-4 px-4 py-2 border border-rose-900 bg-rose-900 text-white hover:bg-white hover:text-rose-900 font-bold rounded">
+    Confirm
+  </button>
+</app-modal-dialog>
+
+
+

@@ -1,0 +1,59 @@
+<div class="min-h-screen flex justify-center items-center">
+  <div
+    class="max-w-md bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+<!--    Image replacing SVG-->
+    <img class="h-48 w-full object-cover"
+         [src]="event().image" [alt]="event().name"/>
+
+    <div class="p-5">
+<!--      Date Badge-->
+      <span
+        class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full font-semibold mb-3">
+                    {{event().date | date}}
+                </span>
+
+<!--      Title-->
+      <h3 class="text-xl font-bold text-gray-900 mb-2">{{event().name}}</h3>
+
+<!--      Description-->
+      <p class="text-gray-600 text-sm mb-4">
+        {{event().description}}
+      </p>
+
+<!--      Location-->
+      <p class="text-gray-600 text-sm mb-4">
+        {{event().location}}
+      </p>
+
+<!--      Buttons-->
+      <hr class="mb-4 mt-2"/>
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <button class="w-full md:flex-1 m-1 py-2 px-4 border-2 border-indigo-900 hover:bg-indigo-900 hover:text-white text-indigo-900 font-bold rounded-lg" (click)="addEvent(event())">
+        Register
+        </button>
+        <button class="w-full md:flex-1 m-1 py-2 border-2 border-rose-900 px-4 hover:bg-rose-900 hover:text-white text-rose-900 font-bold rounded-lg" (click)="openModal()">
+          Delete
+        </button>
+        <button class="w-full md:flex-1 m-1 py-2 border-2 border-yellow-900 px-4 hover:bg-yellow-900 hover:text-white text-yellow-900 font-bold rounded-lg">
+          <a routerLink="/events">Back</a>
+        </button>
+      </div>
+      <hr class="mb-4 mt-4"/>
+    </div>
+  </div>
+</div>
+
+<app-modal-dialog [isOpen]="isModalOpen()" (close)="modalClose()">
+  <!-- Content passed into the modal's ng-content -->
+  <p class="text-2xl leading-relaxed text-gray-500 dark:text-gray-400">
+    Do you really want to delete {{event().name}}?
+  </p>
+  <button (click)="deleteEvent(event())" class="mt-4 px-4 py-2 border border-rose-900 bg-rose-900 text-white hover:bg-white hover:text-rose-900 font-bold rounded">
+    Confirm
+  </button>
+</app-modal-dialog>
+
+
+
+
+

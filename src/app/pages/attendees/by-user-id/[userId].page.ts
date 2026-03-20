@@ -2,9 +2,12 @@ import {Component, inject, input, OnInit} from "@angular/core";
 import {AttendeeDb} from "../../../services/attendee-db";
 import {AttendeeService} from "../../../services/attendee-service";
 import {AttendeesTable} from "../../../components/attendees/attendees-table/attendees-table";
+import {RouteMeta} from "@analogjs/router";
+import {authGuard} from "../../../guards/authGuard.guard";
+import {isOwnerCheckByUserIdOrAdminGuard} from "../../../guards/isOwnerCheckByUserIdOrAdminGuard.guard";
 
 export const routeMeta: RouteMeta = {
-  canActivate: [authGuard],
+  canActivate: [authGuard, isOwnerCheckByUserIdOrAdminGuard],
 };
 
 @Component({

@@ -1,0 +1,33 @@
+<form class="flex flex-col max-w-sm shadow-2xl px-10 py-8 mx-auto rounded-lg mt-20 ring ring-gray-300">
+  <h4 class="text-center text-xl font-bold mb-4">Event Create Form</h4>
+  <div class="mb-3 flex-col items-center">
+    <label for="name" class="text-base">Name</label>
+    <input class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="text" id="name" [formField]="eventCreateForm.name" />
+  </div>
+  <div class="mb-3 flex-col items-center">
+    <label for="description" class="text-base">Description</label>
+    <textarea class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="text" id="description" [formField]="eventCreateForm.description"></textarea>
+  </div>
+  <div class="mb-3 flex-col items-center">
+    <label for="location" class="text-base">Location</label>
+    <input class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="text" id="location" [formField]="eventCreateForm.location"/>
+  </div>
+  <div class="mb-3 flex-col items-center">
+    <label for="date" class="text-base">Date</label>
+    <input class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="date" id="date" [formField]="eventCreateForm.date"/>
+  </div>
+  <div class="mb-3 flex-col items-center">
+    <label for="image" class="text-base">Image</label>
+    <input class="w-full max-w-xs ring-1 ring-gray-300 rounded-md" type="text" id="image" [formField]="eventCreateForm.image"/>
+  </div>
+  <div class="flex flex-col md:flex-row items-center md:justify-between mt-6 md:gap-2">
+    <button type="button" class="py-2 border-2 border-yellow-900 px-4 hover:bg-yellow-900 hover:text-white text-yellow-900 font-bold rounded-lg w-full md:w-1/2 mb-2" (click)="backToList()">Back</button>
+    <button type="button" class="py-2 px-4 border-2 border-indigo-900 hover:bg-indigo-900 hover:text-white text-indigo-900 font-bold rounded-lg w-full md:w-1/2 mb-2" (click)="onSubmit($event)">Save</button>
+  </div>
+</form>
+
+
+
+
+
+

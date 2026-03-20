@@ -7,6 +7,12 @@ import {EventDb} from "../../../services/event-db";
 import {EventService} from "../../../services/event-service";
 import {Router} from "@angular/router";
 import {AttendeeCreate} from "../../../../server/validations/attendee.validation";
+import {RouteMeta} from "@analogjs/router";
+import {authGuard} from "../../../guards/authGuard.guard";
+
+export const routeMeta: RouteMeta = {
+  canActivate: [authGuard],
+};
 
 @Component({
   selector: 'app-detail-event-page',
@@ -57,7 +63,7 @@ export default class DetailEventPage implements OnInit, OnChanges{
     }
 
     //----> Create a new attendee.
-    await this.attendeeDb.createEvent(newAttendee);
+    await this.attendeeDb.createAttendee(newAttendee);
 
     await this.router.navigate([this.authService.isAdmin() ? "/attendees" : `/attendees/by-user-id/${userId}`]);
 

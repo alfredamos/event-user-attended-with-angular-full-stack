@@ -4,6 +4,13 @@ import {EventService} from "../../../services/event-service";
 import {EventModel} from "../../../models/event.model";
 import {EventDb} from "../../../services/event-db";
 import {Router} from "@angular/router";
+import {RouteMeta} from "@analogjs/router";
+import {adminGuard} from "../../../guards/adminGuard.guard";
+import {authGuard} from "../../../guards/authGuard.guard";
+
+export const routeMeta: RouteMeta = {
+  canActivate: [authGuard, adminGuard],
+};
 
 @Component({
   selector: 'app-edit-event-page',
