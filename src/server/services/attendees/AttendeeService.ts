@@ -16,26 +16,26 @@ class AttendeeService implements IAttendeeService {
     return toAttendeeResponse(attendee);
   }
 
-  async deleteAttendeeById(eventId: string, userId: string): Promise<ResponseMessage> {
+  async deleteAttendeeById(eventId: string, userId: string): Promise<AttendeeResponse> {
       //----> Check if the attendee exists.
       await this.getOneAttendee(eventId, userId);
 
       //----> Delete the attendee.
-      await prisma.attendee.delete({where: {eventId_userId: {eventId, userId}}});
+      const deletedAttendee = await prisma.attendee.delete({where: {eventId_userId: {eventId, userId}}, include: {event: true, user: true}});
 
       //----> Return the response message.
-      return new ResponseMessage("Attendee deleted successfully", "success", StatusCodes.OK);
+      return toAttendeeResponse(deletedAttendee)
   }
 
-  async editAttendeeById(eventId: string, userId: string, request: AttendeeUncheckedUpdateInput): Promise<ResponseMessage> {
+  async editAttendeeById(eventId: string, userId: string, request: AttendeeUncheckedUpdateInput): Promise<AttendeeResponse> {
     //----> Check for the existence of the attendee with event id and user id.
     await this.getOneAttendee(eventId, userId);
 
     //----> Update the attendee.
-    await prisma.attendee.update({where: {eventId_userId: {eventId, userId}}, data: request});
+    const editedAttendee = await prisma.attendee.update({where: {eventId_userId: {eventId, userId}}, data: request, include: {event: true, user: true}});
 
     //----> Return the response message.
-    return new ResponseMessage("Attendee updated successfully", "success", StatusCodes.OK);
+    return toAttendeeResponse(editedAttendee)
   }
 
   async getAllAttendees(): Promise<AttendeeResponse[]> {

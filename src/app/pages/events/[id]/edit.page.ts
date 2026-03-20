@@ -1,4 +1,4 @@
-import {Component, inject, input, OnInit, signal} from "@angular/core";
+import {Component, inject, input, OnChanges, OnInit, signal, SimpleChanges} from "@angular/core";
 import {EventEditForm} from "../../../components/events/event-edit-form/event-edit-form";
 import {EventService} from "../../../services/event-service";
 import {EventModel} from "../../../models/event.model";
@@ -17,7 +17,7 @@ import {Router} from "@angular/router";
     </app-event-edit-form>
   `,
 })
-export default class EditEventPage implements OnInit{
+export default class EditEventPage implements OnInit, OnChanges{
   event = signal<EventModel>(new EventModel())
 
   id = input.required<string>();
@@ -27,6 +27,12 @@ export default class EditEventPage implements OnInit{
   router = inject(Router);
 
   async ngOnInit() {
+    console.log("In event-edit, id : ", this.id());
+    const oneEvent = this.loadEvent();
+    this.event.set(oneEvent);
+  }
+
+  async ngOnChanges(_simpleChange: SimpleChanges) {
     const oneEvent = this.loadEvent();
     this.event.set(oneEvent);
   }

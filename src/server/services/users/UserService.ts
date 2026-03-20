@@ -6,15 +6,15 @@ import catchError from "http-errors";
 import {StatusCodes} from "http-status-codes";
 
 class UserService implements IUserService {
-    async deleteUserById(id: string): Promise<ResponseMessage> {
+    async deleteUserById(id: string): Promise<UserDto> {
       //----> Check if the user exists.
       await this.getOneUser(id);
 
       //----> Delete the user.
-      await prisma.user.delete({where: {id}});
+      const deletedUser = await prisma.user.delete({where: {id}});
 
       //----> Return the response message.
-      return new ResponseMessage("User deleted successfully", "success", StatusCodes.OK);
+      return fromUserToUserDto(deletedUser);
     }
 
     async getAllUsers(): Promise<UserDto[]> {

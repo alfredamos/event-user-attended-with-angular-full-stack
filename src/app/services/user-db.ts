@@ -1,7 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {UserService} from './user-service';
 import {User} from '../models/User';
-import { ApiHttpClientService } from './api-http-client-service';
+import {ApiHttpClientService} from './api-http-client-service';
 
 @Injectable({
   providedIn: 'root',
@@ -46,22 +46,7 @@ export class UserDb {
     this.isLoading.set(true);
     this.error.set(null);
     try {
-      const response = await this.apiHttpClientService.get<User>(`/users/${id}`);
-      return response;
-    } catch (err: any) {
-      this.error.set(err.message);
-      throw err;
-    } finally {
-      this.isLoading.set(false);
-    }
-  }
-
-  async getUserByEmail(email: string) {
-    this.isLoading.set(true);
-    this.error.set(null);
-    try {
-      const response = await this.apiHttpClientService.get<User>(`/users/get-user-by-email/${email}`);
-      return response;
+      return await this.apiHttpClientService.get<User>(`/users/${id}`);
     } catch (err: any) {
       this.error.set(err.message);
       throw err;

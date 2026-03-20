@@ -4,6 +4,12 @@ import {EditUserProfileModel} from "../../models/auth/EditUserProfileModel";
 import {User} from "../../models/User";
 import {AuthDb} from "../../services/auth-db";
 import {Router} from "@angular/router";
+import {RouteMeta} from "@analogjs/router";
+import {authGuard} from "../../guards/authGuard.guard";
+
+export const routeMeta: RouteMeta = {
+  canActivate: [authGuard],
+};
 
 @Component({
   selector: 'app-edit-profile-page',

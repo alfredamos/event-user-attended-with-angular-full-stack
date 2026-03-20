@@ -7,34 +7,34 @@ import catchError from "http-errors";
 import {StatusCodes} from "http-status-codes";
 
 class EventService implements IEventService {
-    async createEvent(request: EventCreateInput): Promise<ResponseMessage> {
+    async createEvent(request: EventCreateInput): Promise<EventDto> {
       //----> Insert the new event in the database.
-      await prisma.event.create({data: request});
+      const newEvent = await prisma.event.create({data: request});
 
       //----> Return the response message.
-      return new ResponseMessage("Event created successfully", "success", StatusCodes.CREATED);
+      return toEventDto(newEvent)
     }
 
-    async deleteEventById(id: string): Promise<ResponseMessage> {
+    async deleteEventById(id: string): Promise<EventDto> {
         //----> Check if the event exists.
         await this.getOneEvent(id);
 
         //----> Delete the event.
-        await prisma.event.delete({where: {id}});
+        const deletedEvent = await prisma.event.delete({where: {id}});
 
         //----> Return the response message.
-        return new ResponseMessage("Event deleted successfully", "success", StatusCodes.OK);
+        return toEventDto(deletedEvent)
     }
 
-    async editEventById(id: string, request: EventUpdateInput): Promise<ResponseMessage> {
+    async editEventById(id: string, request: EventUpdateInput): Promise<EventDto> {
         //----> Check if the event exists.
        await this.getOneEvent(id);
 
        //----> Update the event.
-       await prisma.event.update({where: {id}, data: request});
+       const editedEvent = await prisma.event.update({where: {id}, data: request});
 
        //----> Return the response message.
-       return new ResponseMessage("Event updated successfully", "success", StatusCodes.OK);
+       return toEventDto(editedEvent)
     }
 
     async getEventById(id: string): Promise<EventDto> {

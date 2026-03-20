@@ -17,6 +17,7 @@ export class SettingsDropDown implements OnInit{
   authService = inject(AuthService);
   authDb = inject(AuthDb)
   userId = computed(() =>  this.authService.userCurrent()?.id as string);
+  isAdmin = computed(() => this.authService.isAdmin());
 
   onRefreshUserToken = output<void>();
 
@@ -34,4 +35,5 @@ export class SettingsDropDown implements OnInit{
 
     return this.userId() ?? currentUser?.id
   }
+
 }

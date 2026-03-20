@@ -24,14 +24,14 @@ export class EventService {
   }
 
   setLocalStorage(events: EventModel[]) {
-    this.storageService.set(LocalStorageKey.postKey, JSON.stringify(events));
+    this.storageService.set(LocalStorageKey.eventKey, JSON.stringify(events));
   }
 
   getLocalStorage(){
-    return JSON.parse(this.storageService.get(LocalStorageKey.postKey) as string) as EventModel[] ?? [];
+    return JSON.parse(this.storageService.get(LocalStorageKey.eventKey) as string) as EventModel[] ?? [];
   }
 
   removeStorage(){
-    this.storageService.remove(LocalStorageKey.postKey);
+    this.storageService.remove(LocalStorageKey.eventKey);
   }
 }

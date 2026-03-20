@@ -9,6 +9,9 @@ import { EditUserProfileModel } from "../models/auth/EditUserProfileModel";
 import { SignupUserModel } from "../models/auth/SignupUserModel";
 import { User } from "../models/User";
 import { AuthService } from "./auth-service";
+import {AttendeeService} from "./attendee-service";
+import {UserService} from "./user-service";
+import {EventService} from "./event-service";
 
 @Injectable({ providedIn: 'root' })
 export class AuthDb {
@@ -26,9 +29,9 @@ export class AuthDb {
     | null
   >;
   private authService = inject(AuthService);
-  //private authorService = inject(AuthorService);
-  //private userService = inject(UserService);
-  //private postService = inject(PostService);
+  private attendeeService = inject(AttendeeService);
+  private eventService = inject(EventService);
+  private userService = inject(UserService);
 
   async changeUserPassword(changeUserPasswordModel: ChangeUserPasswordModel) {
     this.isLoading.set(true);
@@ -167,9 +170,9 @@ export class AuthDb {
 
   removeStoresAndLocalStorages() {
     this.authService.removeSession();
-    //this.authorService.removeAuthors();
-    //this.postService.removePosts();
-    //this.userService.removeUsers();
+    this.attendeeService.removeAttendees();
+    this.eventService.removeEvents();
+    this.userService.removeUsers();
   }
 
   updateCurrentUser(user: User) {

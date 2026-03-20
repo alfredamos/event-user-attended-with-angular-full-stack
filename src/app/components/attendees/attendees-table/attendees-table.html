@@ -1,0 +1,84 @@
+@if (attendees().length === 0) {
+  <div class="flex justify-between items-center mt-5">
+    <span class="font-bold">Add New Attendee</span>
+    <button class="flex-end px-4 py-1 bg-white text-indigo-900 border border-indigo-900 hover:bg-indigo-900 hover:text-white rounded-lg">
+      <a routerLink="/attendee/add" class="font-bold">Add</a>
+    </button>
+  </div>
+  <div class="h-dvh flex justify-center items-center">
+    <h1 class="font-bold p-10 bg-red-200 ring-1 ring-red-200 rounded-lg shadow-lg text-black">There are no events to display at this time!</h1>
+  </div>
+}@else{
+
+  <div class="overflow-x-auto overflow-y-auto mt-5 max-w-sm md:max-w-2xl mx-auto">
+    <hr class="h-px my-4 bg-gray-200 border-0"/>
+    <h4 class="text-center text-xl font-bold">List of Attendees</h4>
+    <hr class="h-px my-4 bg-gray-200 border-0"/>
+    <div class="flex justify-between items-center">
+      <span class="font-bold">Add New Attendee</span>
+      <button class="flex-end px-4 py-1 bg-white text-indigo-900 border border-indigo-900 hover:bg-indigo-900 hover:text-white rounded-lg">
+        <a routerLink="/attendee/add" class="font-bold">Add</a>
+      </button>
+    </div>
+    <hr class="h-px my-4 bg-gray-200 border-0"/>
+    <table class="mt-5">
+      <thead>
+      <tr>
+        <th class="px-2 text-left">Image</th>
+        <th class="px-2 text-left">Event</th>
+        <th class="px-2 text-left">Description</th>
+        <th class="px-2 text-left">Location</th>
+        <th class="px-2 text-left">Date</th>
+        <th class="px-2 text-left">Status</th>
+        <th class="px-2 text-left">Username</th>
+        <th class="px-2 text-left">UserEmail</th>
+        <th class="px-2 text-left">UserPhone</th>
+        <th class="px-2 text-left">Gender</th>
+        <th class="px-2 text-center">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (attendee of attendees(); track attendee.eventId + attendee.userId){
+          <tr>
+            <td class="m-1">
+              <div class="relative w-full h-20">
+                <img
+                  [ngSrc]="attendee.eventImage"
+                  class="object-cover p-1"
+                  [alt]="attendee.eventName"
+                  fill
+                  priority
+                />
+              </div>
+            </td>
+            <td class="px-2 align-top">{{attendee.eventName}}</td>
+            <td class="px-2 align-top">{{attendee.description}}</td>
+            <td class="px-2 align-top">{{attendee.location}}</td>
+            <td class="px-2 align-top">{{attendee.date | date}}</td>
+            <td class="px-2 align-top">{{attendee.status}}</td>
+            <td class="px-2 align-top">{{attendee.userName}}</td>
+            <td class="px-2 align-top">{{attendee.userEmail}}</td>
+            <td class="px-2 align-top">{{attendee.userPhone}}</td>
+            <td class="px-2 align-top">{{attendee.gender}}</td>
+            <td class="flex items-center justify-center gap-2 px-2 align-middle">
+              <a [routerLink]="`/attendees/${attendee.eventId}/${attendee.userId}/detail`" class="px-2 py-1 bg-white text-indigo-900 border border-indigo-900 hover:bg-indigo-900 hover:text-white font-bold rounded-md">
+                Detail
+              </a>
+              <a [routerLink]="`/attendees/${attendee.eventId}/${attendee.userId}/edit`" class="px-2 py-1 bg-white text-yellow-900 border border-yellow-900 hover:bg-yellow-900 hover:text-white font-bold rounded-md">
+                Edit
+              </a>
+              <a [routerLink]="`/attendees/${attendee.eventId}/${attendee.userId}/detail`" class="px-2 py-1 bg-white text-rose-900 border border-rose-900 hover:bg-rose-900 hover:text-white font-bold rounded-md">
+                Delete
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <hr class="h-px my-8 bg-gray-200 border-0"/>
+  </div>
+}
+
+
+
+

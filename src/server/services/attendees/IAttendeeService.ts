@@ -4,8 +4,8 @@ import {ResponseMessage} from "../../utils/responseMessage.util";
 
 export interface IAttendeeService {
   createAttendee(request: AttendeeUncheckedCreateInput): Promise<AttendeeResponse>;
-  deleteAttendeeById(eventId: string, userId: string): Promise<ResponseMessage>;
-  editAttendeeById(eventId: string, userId: string, request: AttendeeUncheckedUpdateInput): Promise<ResponseMessage>;
+  deleteAttendeeById(eventId: string, userId: string): Promise<AttendeeResponse>;
+  editAttendeeById(eventId: string, userId: string, request: AttendeeUncheckedUpdateInput): Promise<AttendeeResponse>;
   getAllAttendees(): Promise<AttendeeResponse[]>;
   getAttendeeById(eventId: string, userId: string): Promise<AttendeeResponse>;
   getAttendeesByEventId(eventId: string): Promise<AttendeeResponse[]>;
