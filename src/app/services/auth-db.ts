@@ -171,7 +171,7 @@ export class AuthDb {
   removeStoresAndLocalStorages() {
     this.authService.removeSession();
     this.attendeeService.removeAttendees();
-    this.eventService.removeEvents();
+    //this.eventService.removeEvents();
     this.userService.removeUsers();
   }
 

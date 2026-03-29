@@ -9,6 +9,14 @@ import {Status} from "../../../generated/prisma/enums";
 
 class AttendeeService implements IAttendeeService {
   async createAttendee(request: AttendeeUncheckedCreateInput): Promise<AttendeeResponse> {
+     //----> Check for existence of attendee.
+        const attendeeExisted = await this.getOneAttendee(request.eventId, request.userId);
+
+        //----> If existed send back response.
+        if (attendeeExisted){
+            return toAttendeeResponse(attendeeExisted);
+        }
+
     //----> Insert the new attendee in the db.
     const attendee = await prisma.attendee.create({data: request, include: {event: true, user: true}});
 
