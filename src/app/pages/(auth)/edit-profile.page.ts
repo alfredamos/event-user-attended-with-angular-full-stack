@@ -6,6 +6,7 @@ import {AuthDb} from "../../services/auth-db";
 import {Router} from "@angular/router";
 import {RouteMeta} from "@analogjs/router";
 import {authGuard} from "../../guards/authGuard.guard";
+import {httpResource} from "@angular/common/http";
 
 export const routeMeta: RouteMeta = {
   canActivate: [authGuard],
@@ -15,21 +16,18 @@ export const routeMeta: RouteMeta = {
   selector: 'app-edit-profile-page',
   imports: [EditProfileForm],
   template: `
-    <app-edit-profile-form [user]="user()" (onBackToList)="backToList()" (onEditProfile)="editProfileSubmit($event)" ></app-edit-profile-form>
+    <app-edit-profile-form [user]="user.value()" (onBackToList)="backToList()" (onEditProfile)="editProfileSubmit($event)" ></app-edit-profile-form>
   `,
   standalone: true
 })
-export default class EditProfilePage implements OnInit{
-  user = signal<User>(new User());
-
+export default class EditProfilePage{
   authDb = inject(AuthDb);
   router = inject(Router);
 
 
-  async ngOnInit() {
-     const currentUser = await this.authDb.getCurrentUser();
-     this.user.set(currentUser);
-  }
+  user = httpResource<User>(() => "/auth/me", {
+    defaultValue: new User()
+  })
 
   async backToList() {
     await this.router.navigate(['/']);

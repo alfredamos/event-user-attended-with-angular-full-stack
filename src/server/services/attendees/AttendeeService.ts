@@ -10,7 +10,15 @@ import {Status} from "../../../generated/prisma/enums";
 class AttendeeService implements IAttendeeService {
   async createAttendee(request: AttendeeUncheckedCreateInput): Promise<AttendeeResponse> {
      //----> Check for existence of attendee.
-        const attendeeExisted = await this.getOneAttendee(request.eventId, request.userId);
+        const attendeeExisted = await prisma.attendee.findUnique({
+          where: {
+            eventId_userId: {
+              eventId: payload.eventId,
+              userId: payload.userId,
+            },
+          },
+          include: { event: true, user: true },
+        });
 
         //----> If existed send back response.
         if (attendeeExisted){
