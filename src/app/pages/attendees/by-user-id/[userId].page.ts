@@ -1,10 +1,10 @@
-import {Component, inject, input, OnInit} from "@angular/core";
-import {AttendeeDb} from "../../../services/attendee-db";
-import {AttendeeService} from "../../../services/attendee-service";
+import {Component, input} from "@angular/core";
 import {AttendeesTable} from "../../../components/attendees/attendees-table/attendees-table";
 import {RouteMeta} from "@analogjs/router";
 import {authGuard} from "../../../guards/authGuard.guard";
 import {isOwnerCheckByUserIdOrAdminGuard} from "../../../guards/isOwnerCheckByUserIdOrAdminGuard.guard";
+import {httpResource} from "@angular/common/http";
+import {AttendeeResponse} from "../../../../server/dto/attendeeRequest.dto";
 
 export const routeMeta: RouteMeta = {
   canActivate: [authGuard, isOwnerCheckByUserIdOrAdminGuard],
@@ -14,16 +14,13 @@ export const routeMeta: RouteMeta = {
   selector: 'app-attendees-by-user-id-page',
   imports: [AttendeesTable],
   template: `
-    <app-attendees-table [attendees]="attendeeService.attendees()" ></app-attendees-table>
+    <app-attendees-table [attendees]="attendees.value()" ></app-attendees-table>
   `,
 })
-export default class AttendeesByUserIdPage implements OnInit{
+export default class AttendeesByUserIdPage{
   userId = input.required<string>();
-  attendeeDb = inject(AttendeeDb);
-  attendeeService = inject(AttendeeService);
 
-
-  async ngOnInit() {
-    this.attendeeDb.getAttendeesByUserId(this.userId()).then((attendee) => {console.log(attendee)}).catch((error) => {console.error(error)})
-  }
+  attendees = httpResource<AttendeeResponse[]>(() => `/attendees/by-user-id/${this.userId()}`, {
+    defaultValue: []
+  })
 }

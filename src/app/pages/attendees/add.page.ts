@@ -4,12 +4,11 @@ import {authGuard} from "../../guards/authGuard.guard";
 import {adminGuard} from "../../guards/adminGuard.guard";
 import {AttendeeCreateForm} from "../../components/attendees/attendee-create-form/attendee-create-form";
 import {AttendeeCreate} from "../../../server/validations/attendee.validation";
-import {EventDb} from "../../services/event-db";
-import {UserDb} from "../../services/user-db";
-import {AttendeeDb} from "../../services/attendee-db";
-import {EventService} from "../../services/event-service";
-import {UserService} from "../../services/user-service";
 import {Router} from "@angular/router";
+import {httpResource} from "@angular/common/http";
+import {EventModel} from "../../models/event.model";
+import {User} from "../../models/User";
+import {AttendeeDb} from "../../services/attendee-db";
 
 export const routeMeta: RouteMeta = {
   canActivate: [authGuard, adminGuard],
@@ -20,29 +19,25 @@ export const routeMeta: RouteMeta = {
   imports: [AttendeeCreateForm],
   template: `
     <app-attendee-create-form
-      [users]="userService.users()"
-      [events]="eventService.events()"
+      [users]="users.value()"
+      [events]="events.value()"
       (onAttendeeCreate)="createAttendee($event)"
       (onBackToList)="backToList()"
     >
     </app-attendee-create-form>
   `,
 })
-export default class AddAttendeePage implements OnInit{
+export default class AddAttendeePage {
   attendeeDb = inject(AttendeeDb);
-
-  eventDb = inject(EventDb);
-  eventService = inject(EventService);
-
   router = inject(Router);
 
-  userDb = inject(UserDb);
-  userService = inject(UserService);
+  events = httpResource<EventModel[]>(() => `/events`, {
+    defaultValue: []
+  });
 
-  async ngOnInit() {
-    this.eventDb.getEvents().then(console.log).catch(console.error);
-    this.userDb.getUsers().then(console.log).catch(console.error);
-  }
+  users = httpResource<User[]>(() => "/users", {
+    defaultValue: []
+  })
 
   async createAttendee(attendee: AttendeeCreate) {
     await this.attendeeDb.createAttendee(attendee);

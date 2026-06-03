@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {AttendeeCreate} from "../../../../server/validations/attendee.validation";
 import {RouteMeta} from "@analogjs/router";
 import {authGuard} from "../../../guards/authGuard.guard";
+import {httpResource} from "@angular/common/http";
 
 export const routeMeta: RouteMeta = {
   canActivate: [authGuard],
@@ -19,7 +20,7 @@ export const routeMeta: RouteMeta = {
   imports: [EventDetail],
   template: `
     <app-event-detail
-      [event]="event()"
+      [event]="event.value()"
       [isModalOpen]="isModalOpen()"
       (onAddAttendee)="addAttendee($event)"
       (onDeleteEvent)="deleteEvent($event)"
@@ -29,31 +30,18 @@ export const routeMeta: RouteMeta = {
     </app-event-detail>
   `,
 })
-export default class DetailEventPage implements OnInit, OnChanges{
+export default class DetailEventPage {
   id = input.required<string>();
 
   isModalOpen = signal(false);
-  event = signal<EventModel>(new EventModel())
+  event = httpResource<EventModel>(() => `/events/${this.id()}` , {
+    defaultValue: new EventModel()
+  })
 
   attendeeDb = inject(AttendeeDb);
   authService = inject(AuthService);
   eventDb = inject(EventDb);
-  eventService = inject(EventService);
   router = inject(Router);
-
-  async ngOnInit(): Promise<void> {
-    console.log("In event-detail, id : ", this.id());
-    const oneEvent = this.loadEvent();
-
-    this.event.set(oneEvent)
-  }
-
-  async ngOnChanges(_simpleChange: SimpleChanges): Promise<void> {
-    console.log("In event-detail, id : ", this.id());
-    const oneEvent = this.loadEvent();
-
-    this.event.set(oneEvent)
-  }
 
   async addAttendee (event: EventModel){
     const userId = this.authService.userCurrent()?.id;
@@ -67,10 +55,6 @@ export default class DetailEventPage implements OnInit, OnChanges{
 
     await this.router.navigate([this.authService.isAdmin() ? "/attendees" : `/attendees/by-user-id/${userId}`]);
 
-  }
-
-  loadEvent(){
-    return this.eventService.findEventById(this.id()) as unknown as EventModel;
   }
 
   openModal() {

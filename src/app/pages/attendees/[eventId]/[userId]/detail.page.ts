@@ -8,6 +8,7 @@ import {AttendeeDb} from "../../../../services/attendee-db";
 import {Router} from "@angular/router";
 import {RouteMeta} from "@analogjs/router";
 import {authGuard} from "../../../../guards/authGuard.guard";
+import {httpResource} from "@angular/common/http";
 
 export const routeMeta: RouteMeta = {
   canActivate: [authGuard],
@@ -18,7 +19,7 @@ export const routeMeta: RouteMeta = {
   imports: [AttendeeDetail],
   template: `
     <app-attendee-detail
-      [attendeeResponse]="attendeeResponse()"
+      [attendeeResponse]="attendeeResponse.value()"
       [isAdmin]="authService.isAdmin()"
       [isModalOpen]="isModalOpen()"
       (onOpenModal)="openModal()"
@@ -28,26 +29,20 @@ export const routeMeta: RouteMeta = {
     </app-attendee-detail>
   `,
 })
-export default class DetailAttendeePageById implements OnInit, OnChanges{
+export default class DetailAttendeePageById{
   isModalOpen = signal(false);
 
   eventId = input.required<string>();
   userId = input.required<string>();
 
-  attendeeResponse = signal<AttendeeResponse>(new AttendeeResponse());
+  attendeeResponse = httpResource<AttendeeResponse>(() => `/attendees/${this.eventId()}/${this.userId()}`, {
+    defaultValue: new AttendeeResponse()
+  });
 
   authService = inject(AuthService);
   attendeeDb = inject(AttendeeDb);
   attendeeService = inject(AttendeeService);
   router = inject(Router);
-
-  ngOnInit(): void {
-    this.attendeeResponse.set(this.attendeeService.findAttendeeById(this.eventId(), this.userId()) as unknown as AttendeeResponse);
-  }
-
-  ngOnChanges(_simpleChanges: SimpleChanges): void {
-    this.attendeeResponse.set(this.attendeeService.findAttendeeById(this.eventId(), this.userId()) as unknown as AttendeeResponse);
-  }
 
   openModal() {
     this.isModalOpen.set(true);

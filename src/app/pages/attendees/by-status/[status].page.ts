@@ -5,6 +5,8 @@ import {AttendeesTable} from "../../../components/attendees/attendees-table/atte
 import {adminGuard} from "../../../guards/adminGuard.guard";
 import {authGuard} from "../../../guards/authGuard.guard";
 import {RouteMeta} from "@analogjs/router";
+import {httpResource} from "@angular/common/http";
+import {AttendeeResponse} from "../../../../server/dto/attendeeRequest.dto";
 
 export const routeMeta: RouteMeta = {
   canActivate: [authGuard, adminGuard],
@@ -14,16 +16,14 @@ export const routeMeta: RouteMeta = {
   selector: 'app-attendees-by-status-page',
   imports: [AttendeesTable],
   template: `
-    <app-attendees-table [attendees]="attendeeService.attendees()" ></app-attendees-table>
+    <app-attendees-table [attendees]="attendees.value()" ></app-attendees-table>
   `,
 })
-export default class AttendeesByStatusPage implements OnInit{
+export default class AttendeesByStatusPage{
   status = input.required<string>();
-  attendeeDb = inject(AttendeeDb);
-  attendeeService = inject(AttendeeService);
 
+  attendees = httpResource<AttendeeResponse[]>(() => `/attendees/by-status/${this.status()}`, {
+    defaultValue: []
+  });
 
-  async ngOnInit() {
-    this.attendeeDb.getAttendeesByStatus(this.status()).then((attendee) => {console.log(attendee)}).catch((error) => {console.error(error)})
-  }
 }

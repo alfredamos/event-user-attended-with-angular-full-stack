@@ -1,12 +1,12 @@
 import {Component, inject, input, OnChanges, OnInit, signal, SimpleChanges} from "@angular/core";
 import {EventEditForm} from "../../../components/events/event-edit-form/event-edit-form";
-import {EventService} from "../../../services/event-service";
 import {EventModel} from "../../../models/event.model";
 import {EventDb} from "../../../services/event-db";
 import {Router} from "@angular/router";
 import {RouteMeta} from "@analogjs/router";
 import {adminGuard} from "../../../guards/adminGuard.guard";
 import {authGuard} from "../../../guards/authGuard.guard";
+import {httpResource} from "@angular/common/http";
 
 export const routeMeta: RouteMeta = {
   canActivate: [authGuard, adminGuard],
@@ -17,36 +17,22 @@ export const routeMeta: RouteMeta = {
   imports: [EventEditForm],
   template: `
     <app-event-edit-form
-      [event]="event()"
+      [event]="event.value()"
       (onEventEdit)="editEvent($event)"
       (onBackToList)="backToList()"
     >
     </app-event-edit-form>
   `,
 })
-export default class EditEventPage implements OnInit, OnChanges{
-  event = signal<EventModel>(new EventModel())
-
+export default class EditEventPage {
   id = input.required<string>();
 
+  event = httpResource<EventModel>(() => `/events/${this.id()}`, {
+    defaultValue: new EventModel()
+  })
+
   eventDb = inject(EventDb);
-  eventService = inject(EventService);
   router = inject(Router);
-
-  async ngOnInit() {
-    console.log("In event-edit, id : ", this.id());
-    const oneEvent = this.loadEvent();
-    this.event.set(oneEvent);
-  }
-
-  async ngOnChanges(_simpleChange: SimpleChanges) {
-    const oneEvent = this.loadEvent();
-    this.event.set(oneEvent);
-  }
-
-  loadEvent() {
-    return this.eventService.findEventById(this.id()) as unknown as EventModel;
-  }
 
   async editEvent(event: EventModel){
     event.id = this.id();
