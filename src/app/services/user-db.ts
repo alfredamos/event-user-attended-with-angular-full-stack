@@ -14,20 +14,6 @@ export class UserDb {
   apiHttpClientService = inject(ApiHttpClientService) as ApiHttpClientService<User>;
   userService = inject(UserService);
 
-  async getUsers() {
-    this.isLoading.set(true);
-    this.error.set(null);
-    try {
-      const response = await this.apiHttpClientService.get<User[]>("/users");
-      console.log(response)
-      this.updateUsers(response);
-    } catch (err: any) {
-      this.error.set(err.message);
-    } finally {
-      this.isLoading.set(false);
-    }
-  }
-
   async deleteUserById(id: string) {
     this.isLoading.set(true);
     this.error.set(null);
@@ -37,19 +23,6 @@ export class UserDb {
       this.updateUsers(newUsers);
     } catch (err: any) {
       this.error.set(err.message);
-    } finally {
-      this.isLoading.set(false);
-    }
-  }
-
-  async getUserById(id: string) {
-    this.isLoading.set(true);
-    this.error.set(null);
-    try {
-      return await this.apiHttpClientService.get<User>(`/users/${id}`);
-    } catch (err: any) {
-      this.error.set(err.message);
-      throw err;
     } finally {
       this.isLoading.set(false);
     }

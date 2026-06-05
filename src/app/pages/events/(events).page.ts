@@ -20,7 +20,7 @@ export const routeMeta: RouteMeta = {
   `,
 })
 export default class EventsPage {
-  events = httpResource<EventModel>(() => "/events", {
+  events = httpResource<EventModel[]>(() => "/events", {
     defaultValue: []
   })
 }

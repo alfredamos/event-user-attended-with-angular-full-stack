@@ -13,35 +13,6 @@ export class EventDb {
   eventService = inject(EventService);
   apiHttpClientService = inject(ApiHttpClientService) as ApiHttpClientService<EventModel| EventCreate | null>;
 
-  async getEvents() {
-    this.isLoading.set(true);
-    this.error.set(null);
-    try {
-      const response = await this.apiHttpClientService.get<EventModel[]>("/events");
-      this.updateEvents(response);
-      return response;
-    } catch (err: any) {
-      this.error.set(err.message);
-      throw err;
-    } finally {
-      this.isLoading.set(false);
-
-    }
-  }
-
-  async getEventById(id: string) {
-    this.isLoading.set(true);
-    this.error.set(null);
-    try {
-      return  await this.apiHttpClientService.get<EventModel>(`/events/${id}`);
-    } catch (err: any) {
-      this.error.set(err.message);
-      throw err;
-    } finally {
-      this.isLoading.set(false);
-    }
-  }
-
   async deleteEventById(id: string) {
     this.isLoading.set(true);
     this.error.set(null);
